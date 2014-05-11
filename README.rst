@@ -36,7 +36,8 @@ C) OpenERP - Production Ready COMPLEX-Rollout (server cluster) on Cloud or VMs (
 
 Is this useful? Need more more use cases covered? Please let us know your detailed opinion.
 
-Technology used and why:
-- VM, because of it's convenience and repeatability - industry standard
-- Vagrant, because of it's convenience, it's live VM sharing function - developers can live-share with non-tech experts)
-- Ansible, because of it's simplicity and readybility - potentially capturing the knowledge of the many and stimulating contribution
+**Technology used and why:**
+
+- **VM**, because of it's convenience and repeatability - industry standard
+- **Vagrant**, because of it's convenience, it's live VM sharing function - developers can live-share with non-tech experts)
+- **Ansible**, because of it's simplicity and readybility - potentially capturing the knowledge of the many and stimulating contribution
