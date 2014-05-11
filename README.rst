@@ -12,26 +12,31 @@ Requirements
 How to
 ------
 
-Once requirements set up: do install the vagrant box of the OpenERP-version you like. Done.
-
-How to: http://docs.vagrantup.com/v2/boxes.html
-@time of redaction - 11.05.2014:
-
-.. code-block:: sh
-
-	vagrant box add USER/BOX
+A) Download the Repository (e.g. as zip) and place in your VM-root folder
+B) Navigate to the VM-root folder in your command line
+C) Hack in the following:
 
 .. code-block:: sh
 
-	USER=OpenERP
-	BOX=OpenERP_[Version]
+	vagrant up
 
-Check https://vagrantcloud.com/OpenERP for available versions.
+
+You're done.
 
 
 
 Good to know
 ------------
 
-This is camptocamps best practice setup for developement.
-More info: https://github.com/camptocamp/puppet-openerp
+The ainm of this project is do provide communitie's best practice roll out for:
+
+A) OpenERP - Instant Development Environment on local VM
+B) OpenERP - Production Ready SIMPLE-Rollout (single server) on Cloud or VM (future goal)
+C) OpenERP - Production Ready COMPLEX-Rollout (server cluster) on Cloud or VMs (future goal)
+
+Is this useful? Need more more use cases covered? Please let us know your detailed opinion.
+
+Technology used and why:
+- VM, because of it's convenience and repeatability - industry standard
+- Vagrant, because of it's convenience, it's live VM sharing function - developers can live-share with non-tech experts)
+- Ansible, because of it's simplicity and readybility - potentially capturing the knowledge of the many and stimulating contribution
