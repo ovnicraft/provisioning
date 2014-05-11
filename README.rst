@@ -21,8 +21,10 @@ How to: http://docs.vagrantup.com/v2/boxes.html
 
 	vagrant box add USER/BOX
 
-Vagrant USER: OpenERP
-Vagrant BOX : OpenERP_[VERSION]
+.. code-block:: sh
+
+	USER=OpenERP
+	BOX=OpenERP_[Version]
 
 Check https://vagrantcloud.com/OpenERP for available versions.
 
