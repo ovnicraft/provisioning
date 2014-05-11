@@ -7,13 +7,13 @@ Requirements
 - VirtualBox or VMWare (e.g. https://www.virtualbox.org/)
 - vagrant (http://www.vagrantup.com/)
 
-
+both installed.
 
 How to
 ------
 
-A) Download the Repository (e.g. as zip) and place in your VM-root folder
-B) Navigate to the VM-root folder in your command line
+A) Download the Repository (e.g. as zip) and place/extract in any Virtual Machine root folder an your host system
+B) Navigate to the Virtual Machine root folder in your host's command line
 C) Hack in the following:
 
 .. code-block:: sh
@@ -21,7 +21,7 @@ C) Hack in the following:
 	vagrant up
 
 
-You're done.
+Wait. You're done. Acess: http://localhost:8069 (shall be echoed from the ansible playbook in the future)
 
 
 
