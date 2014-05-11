@@ -15,8 +15,10 @@ How to
 Once requirements set up: do install the vagrant box of the OpenERP-version you like. Done.
 
 How to: http://docs.vagrantup.com/v2/boxes.html
-@time of redaction - 11.05.2014: 
+@time of redaction - 11.05.2014:
+
 .. code-block:: sh
+
 	vagrant box add USER/BOX´´´´
 
 Vagrant USER: OpenERP
