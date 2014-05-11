@@ -1,0 +1,86 @@
+---
+- hosts: all
+  sudo: yes
+  tasks:
+  # Update all packages to the latest version
+    - name: Packages Upgrade
+      apt: upgrade=full
+      
+    - name: Install required packages
+      apt : name={{ item }} state=latest
+      with_items:
+        - graphviz
+        - ghostscript
+        - postgresql-client
+        - python-dateutil
+        - python-feedparser
+        - python-matplotlib
+        - python-ldap
+        - python-libxslt1
+        - python-lxml
+        - python-mako
+        - python-openid
+        - python-psycopg2
+        - python-pybabel
+        - python-pychart
+        - python-pydot
+        - python-pyparsing
+        - python-reportlab
+        - python-simplejson
+        - python-tz
+        - python-vatnumber
+        - python-vobject
+        - python-webdav
+        - python-werkzeug
+        - python-xlwt
+        - python-yaml
+        - python-imaging
+        
+    - name: Install optional packages
+      yum : name={{ item }} state=latest
+      with_items:
+        - gcc python-dev
+        - mc
+        - bzr
+        - python-setuptools
+        - python-babel
+        - python-feedparser
+        - python-reportlab-accel
+        - python-zsi
+        - python-openssl
+        - python-egenix-mxdatetime
+        - python-jinja2
+        - python-unittest2
+        - python-mock
+        - python-docutils
+        - lptools
+        - make
+        - python-psutil
+        - python-paramiko
+        - poppler-utils
+        - python-pdftools
+        - antiword
+        - postgresql
+        
+    - name: install gdata client (since ubuntu package is old we download and install from source)
+        # get_url: url=http://gdata-python-client.googlecode.com/files/gdata-2.0.17.tar.gz dest=/tmp
+        unarchive: src=http://gdata-python-client.googlecode.com/files/gdata-2.0.17.tar.gz dest=/tmp
+        command: python /tmp/gdata-2.0.17/setup.py install
+        
+    - name: create a new openerp system user for openerp and other related processes
+      user: name=openerp home=/opt/openerp
+      
+    - name: Create database user for openerp
+      postgresql_user: name=openerp role_attr_flags=SUPERUSER
+
+    - name: Checkout Bazaar Sourccode of OpenERP
+      # Example bzr checkout from Ansible Playbooks
+      sudo_user: openerp
+      bzr: name=bzr+ssh://code.launchpad.net/~openerp/openerp-web/7.0 dest=/opt/openerp/v7/web
+      bzr: name=bzr+ssh://code.launchpad.net/~openerp/openobject-server/7.0 dest=/opt/openerp/v7/server
+      bzr: name=bzr+ssh://code.launchpad.net/~openerp/openobject-addons/7.0 dest=/opt/openerp/v7/addons
+      
+    - name: Copy config & log files files
+      - copy: src=/files/openerp-server.conf dest=/etc/openerp-server.conf owner=openerp mode=0640
+      - copy: src=/opt/openerp/v7/server/install/openerp-server.logrotate dest=/etc/logrotate.d/openerp-server owner=openerp group:root mode:0755
+
