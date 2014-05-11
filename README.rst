@@ -19,7 +19,7 @@ How to: http://docs.vagrantup.com/v2/boxes.html
 
 .. code-block:: sh
 
-	vagrant box add USER/BOX´´´´
+	vagrant box add USER/BOX
 
 Vagrant USER: OpenERP
 Vagrant BOX : OpenERP_[VERSION]
