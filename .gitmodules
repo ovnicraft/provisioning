@@ -13,3 +13,9 @@
 [submodule "puppet/python"]
 	path = puppet/python
 	url = https://github.com/camptocamp/puppet-python.git
+[submodule "ansible-openerp"]
+	path = ansible-openerp
+	url = https://github.com/kwanso/ansible-openerp.git
+[submodule "ansible-openerp-altenative"]
+	path = ansible-openerp-altenative
+	url = https://github.com/ahelal/ansible-openerp.git
