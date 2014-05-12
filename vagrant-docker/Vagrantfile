@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "phusion/ubuntu-14.04-amd64"
+  (49000..49900).each do |port|
+    config.vm.network "forwarded_port", :guest => port, :host => port
+  end
+  # config.vm.network "private_network", ip: "192.168.33.10"
+  # config.vm.network "public_network"
+  # config.ssh.forward_agent = true
+  config.vm.synced_folder "./openerp-filetransfer", "/openerp_filetransfer", create: true
+
+  config.vm.provision "docker" do |d|
+    d.run "flox/ubuntu-openerp",
+      args: "-d --name='openerp' --publish='8090:8069'"
+  end
+end

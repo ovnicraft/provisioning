@@ -1,8 +1,9 @@
 ---
 - hosts: all
-  sudo: yes
+  user: vagrant
+  sudo: True
+  
   tasks:
-  # Update all packages to the latest version
     - name: Packages Upgrade
       apt: upgrade=full
       
@@ -35,11 +36,13 @@
         - python-xlwt
         - python-yaml
         - python-imaging
+        - python-gdata
         
     - name: Install optional packages
       yum : name={{ item }} state=latest
       with_items:
-        - gcc python-dev
+        - gcc
+        - python-dev
         - mc
         - bzr
         - python-setuptools
@@ -62,11 +65,6 @@
         - antiword
         - postgresql
         
-    - name: install gdata client (since ubuntu package is old we download and install from source)
-        # get_url: url=http://gdata-python-client.googlecode.com/files/gdata-2.0.17.tar.gz dest=/tmp
-        unarchive: src=http://gdata-python-client.googlecode.com/files/gdata-2.0.17.tar.gz dest=/tmp
-        command: python /tmp/gdata-2.0.17/setup.py install
-        
     - name: create a new openerp system user for openerp and other related processes
       user: name=openerp home=/opt/openerp
       
@@ -81,6 +79,6 @@
       bzr: name=bzr+ssh://code.launchpad.net/~openerp/openobject-addons/7.0 dest=/opt/openerp/v7/addons
       
     - name: Copy config & log files files
-      - copy: src=/files/openerp-server.conf dest=/etc/openerp-server.conf owner=openerp mode=0640
-      - copy: src=/opt/openerp/v7/server/install/openerp-server.logrotate dest=/etc/logrotate.d/openerp-server owner=openerp group:root mode:0755
+      copy: src=/files/openerp-server.conf dest=/etc/openerp-server.conf owner=openerp mode=0640
+      copy: src=/opt/openerp/v7/server/install/openerp-server.logrotate dest=/etc/logrotate.d/openerp-server owner=openerp group:root mode:0755
 
