@@ -34,8 +34,9 @@ C) Hack in the following:
 	vagrant up
 
 
-Wait. You're done. Acess: http://localhost:8069 (shall be echoed from the ansible playbook in the future)
--Under development: You should check on your router the true adress, as it's right now bridged to the network.
+Wait. You're done. 
+Acess1: http://localhost:8069
+Acess2: http://NETWORKIP:8069 (shall be echoed from the ansible playbook in the future) - check your settings (router)
 
 
 
