@@ -1,6 +1,11 @@
 Install OpenERP with a VagrantBox
 =================================
 
+Under Developement:
+-------------------
+
+- Docker-Image started within seconds and OpenERP-Website reached.
+
 Requirements
 ------------
 
