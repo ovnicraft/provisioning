@@ -1,10 +1,39 @@
 Install OpenERP with a VagrantBox
 =================================
 
-Under Developement:
+What works with some luck:
 -------------------
 
 - Docker-Image started within seconds and OpenERP-Website reached.
+
+-To-Dos:
+----------
+Windows control machines aren't supported in ansible (and will not). Local execution of ansible plabooks on the guest is not yet supported by vagrant. (mitchellh/vagrant#2103) The dirty workaround I found is not pretty (and I couldn't get it to work)
+boot2docker (tiny core linux) doesn't support shared folders on windos hosts officially yet without rsync install. This is nothing for a newcomer to do, so FAIL. I heard they're working on that, too.
+
+A normal docker base image worked, but is very heavy ~400MB - this shurely is not a perfect solution... credits @florentx for the docker images, hope they will remain maintained in the future ;)
+
+vagrant supports Hyper-V. This could make Virtulabox in Windows 8.1 upwards obsolete. This is very good news, because it may be even easier to get started with openerp independently of the system. Support for a ansible provision should be already doable (if only ansible local would work) (great)
+So, I think best thing to do is, take some stragic coffees and turn back in a month, when anisble local execution on guest might be available.
+
+By then I hope to include
+
+@bmart 's bestpractice effort,
+@ahelal and @kwanso 's ansible playbooks, and
+@florentx 's docker-image
+into a single, lightweight and deadsimple solution with minimum pre-requirements optimized for a "thumb" user to start developing, needing vagrant only on modern systems:
+
+::
+
+:
+vagrant up --provider=docker for linux and windows hosts of any sort (maby virtualbox needed)
+vagrnat up --provider=hyper-v for ansible provisioning on windows hosts += 8.1
+vagrant up --provider=virtualbox for default ansible provisioning on Mac & Windows & Linux with virtualbox
+vagrant up --provider=cloudaccountwhichhasfreeregistrationfordevsXY - yeah, would be cool
+
+vagrant login + vagrant share - for sharing the own dev-environment (usually frontent, but ssh can be shared as well) over a normal link with non-tech-expert
+
+_::
 
 Requirements
 ------------
