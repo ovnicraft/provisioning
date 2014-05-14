@@ -4,15 +4,52 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "phusion/ubuntu-14.04-amd64"
-  config.vm.network "forwarded_port", guest:8069, host:8069
-  # config.vm.network "private_network", ip: "192.168.33.10"
-  config.vm.network "public_network"
-  # config.ssh.forward_agent = true
-  config.vm.synced_folder "./openerp-filetransfer", "/openerp_filetransfer", create: true
+  config.vm.define "Docker" do |a| ## Give a name to avoide conflict, as second box with name default attempt to mount
 
-  config.vm.provision "docker" do |d|
-    d.run "flox/ubuntu-openerp",
-      args: "-d --name='openerp' --publish='8069:8069'"
+  ## DOCKER BOX CONFIGURATION ##
+  
+  
+  # Running from a ready available OpenERP Docker Box 
+  a.vm.provider "docker" do |d|
+    d.image = "flox/ubuntu-openerp"
+    d.name = "openerp"
+    d.ports = "8069:8069"
+    d.volumes = "/vagrant/openerp_filetransfer:/openerp_filetransfer"
+    d.has_ssh = true
+    
+    ## Default is not working on windows at the moment (shared files bug). (https://github.com/mitchellh/vagrant/issues/3700)
+    # Therefore use alternate boot2docker box "dduportal/boot2docker"
+    # For that point to a special vagrantfile containing the commands.
+    d.vagrant_vagrantfile = "./Vagrantfile_boot2docker_vmfs"
+    # will be removed once a better method and official support for sharing ona boot2docker is achieved.
+ 
   end
+  
+  # Running from your locally OpenERP Docker Box - for development
+  # a.vm.provider "docker" do |d|
+  #   d.build_dir = "."
+  #   d.create_args: "-d --name='openerp' --publish='8069:8069'"
+  #
+  #  ## Workaround on the build argument UNTESTED. ##
+  #  # Default is not working on windows at the moment (shared files bug). (https://github.com/mitchellh/vagrant/issues/3700)
+  #  # Therefore use alternate boot2docker box "dduportal/boot2docker"
+  #  # For that point to a special vagrantfile containing the commands.
+  #  d.vagrant_vagrantfile = "./Vagrantfile_boot2docker_vmfs"
+  #  # will be removed once a better method and official support for sharing ona boot2docker is achieved.
+  #
+  # end
+  
+  
+  
+  ## NETWORK doURATIONS ##
+  
+  # This will make the instance available at http://localhost:8069
+  a.vm.network "forwarded_port", guest:8069, host:8069
+  # This will also make the instance available at http://IP_FROM_DHCP:8069
+  a.vm.network "public_network"
+  
+
+  ## CONFIGURE ADDITIONAL SYNC FOLDER HOST-VIRTUALENVIRONMENT FOR CONVENIENCE ##
+  a.vm.synced_folder "./openerp-filetransfer", "/vagrant/openerp_filetransfer", create: true
+end
 end
