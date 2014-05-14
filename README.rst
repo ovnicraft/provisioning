@@ -25,15 +25,23 @@ into a single, lightweight and deadsimple solution with minimum pre-requirements
 
 ::
 
-:
-vagrant up --provider=docker for linux and windows hosts of any sort (maby virtualbox needed)
-vagrnat up --provider=hyper-v for ansible provisioning on windows hosts += 8.1
-vagrant up --provider=virtualbox for default ansible provisioning on Mac & Windows & Linux with virtualbox
-vagrant up --provider=cloudaccountwhichhasfreeregistrationfordevsXY - yeah, would be cool
+	#Docker for linux, mac and windows hosts of any sort (MAY need virtualbox)
+	vagrant up --provider=docker
+	
+	#Ansible provisioning on windows hosts += 8.1
+	vagrnat up --provider=hyper-v
+	
+	#Default ansible provisioning on Mac & Windows & Linux with virtualbox
+	vagrant up --provider=virtualbox
+	
+	#Yeah, would be cool
+	vagrant up --provider=cloudaccountwhichhasfreeregistrationfordevsXY
+	
+	#Sharing environment over a normal link with non-tech-expert
+	#(usually frontent, but ssh can be shared as well) 
+	vagrant login + vagrant share 
 
-vagrant login + vagrant share - for sharing the own dev-environment (usually frontent, but ssh can be shared as well) over a normal link with non-tech-expert
-
-_::
+::
 
 Requirements
 ------------
