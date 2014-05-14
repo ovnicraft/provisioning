@@ -4,26 +4,34 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.define "Docker" do |a| ## Give a name to avoide conflict, as second box with name default attempt to mount
-
-  ## DOCKER BOX CONFIGURATION ##
+  config.vm.define "Docker" do |a| 
   
+  ## The ugly an heavy way. The 'lightweight' & 'beautiful' way from below doesn't work.
+  a.vm.box = "phusion/ubuntu-14.04-amd64"
+    a.vm.provision "docker" do |d|
+        d.run "flox/ubuntu-openerp",
+        args: "-d --name='openerp' --publish='8069:8069'"
+    end
+  
+  
+  
+  ## DOCKER BOX CONFIGURATION ## Does not work :(
   
   # Running from a ready available OpenERP Docker Box 
-  a.vm.provider "docker" do |d|
-    d.image = "flox/ubuntu-openerp"
-    d.name = "openerp"
-    d.ports = "8069:8069"
-    d.volumes = "/vagrant/openerp_filetransfer:/openerp_filetransfer"
-    d.has_ssh = true
-    
-    ## Default is not working on windows at the moment (shared files bug). (https://github.com/mitchellh/vagrant/issues/3700)
-    # Therefore use alternate boot2docker box "dduportal/boot2docker"
-    # For that point to a special vagrantfile containing the commands.
-    d.vagrant_vagrantfile = "./Vagrantfile_boot2docker_vmfs"
-    # will be removed once a better method and official support for sharing ona boot2docker is achieved.
- 
-  end
+  # a.vm.provider "docker" do |d|
+  #   d.image = "flox/ubuntu-openerp"
+  #   d.name = "openerp"
+  #   d.ports = "8069:8069"
+  #   d.volumes = "/vagrant/openerp_filetransfer:/openerp_filetransfer"
+  #   d.has_ssh = true
+  #   
+  #   ## Default is not working on windows at the moment (shared files bug). (https://github.com/mitchellh/vagrant/issues/3700)
+  #   # Therefore use alternate boot2docker box "dduportal/boot2docker"
+  #   # For that point to a special vagrantfile containing the commands.
+  #   d.vagrant_vagrantfile = "./Vagrantfile_boot2docker_vmfs"
+  #   # will be removed once a better method and official support for sharing ona boot2docker is achieved.
+  # 
+  # end
   
   # Running from your locally OpenERP Docker Box - for development
   # a.vm.provider "docker" do |d|
