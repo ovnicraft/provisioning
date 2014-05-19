@@ -1,0 +1,15 @@
+---
+# This playbook prepares and executes installation of odoo from source on odoo nodes.
+
+## Occasionally check for updates, if error occurs:
+## https://help.github.com/articles/what-are-github-s-ssh-key-fingerprints
+#
+## How to make that work, instead of the accept_hostkey=true arguement below?
+# 
+# - name: Add known hosts to known_hosts file
+#   lineinfile: dest=/home/${ansible_ssh_user}/.ssh/known_hosts regexp=^${item.host} line="${item.line}" create=yes state=present
+#   with_items:
+#    - { "host": "github.com", "line": "github.com,207.97.227.239 ssh-rsa 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48" }
+
+- name: Checkout the Git with ref "{{ odoo_version }}"
+  git: repo=git@github.com:odoo/odoo.git dest=/opt/odoo_${odoo_version} bare=yes depth=1 force=no version="{{ odoo_version }}" accept_hostkey=true

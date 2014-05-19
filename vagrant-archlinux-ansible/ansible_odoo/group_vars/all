@@ -1,0 +1,27 @@
+---
+# Rather unchanged variables listed here are applicable to all host groups.
+
+# Hint@me for a hardened arch-linux setup and good ideas.
+
+# country code for downloading at local mirrors set up
+#
+# AU AT BY BE BR BG CA CL CN CO CZ DK EE FI FR DE GR HK HU IS IN
+# ID IE IL IT JP KZ KR LV LU MK NL NC NZ NO PL PT RO RU RS SG SK
+# ZA ES LK SE CH TW TR UA GB US UZ VN all
+country_code: "US"
+
+# whether or not to force a mirrorlist update on every run
+update_mirrorlist: false
+
+# Odoo version to checkout and install (can be branch, tag, HEAD, SHA)
+odoo_version: saas-4
+
+# the network time protocol servers to utilize
+ntp_servers:
+  - "0.us.pool.ntp.org"
+  - "1.us.pool.ntp.org"
+  - "2.us.pool.ntp.org"
+  - "3.us.pool.ntp.org"
+
+# *** DO NOT EDIT BELOW THIS LINE ***
+ansible_python_interpreter: /usr/bin/python2
