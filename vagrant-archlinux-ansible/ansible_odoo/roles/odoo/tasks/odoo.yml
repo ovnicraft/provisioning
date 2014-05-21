@@ -3,13 +3,26 @@
 
 ## Occasionally check for updates, if error occurs:
 ## https://help.github.com/articles/what-are-github-s-ssh-key-fingerprints
-#
-## How to make that work, instead of the accept_hostkey=true arguement below?
-# 
-# - name: Add known hosts to known_hosts file
-#   lineinfile: dest=/home/${ansible_ssh_user}/.ssh/known_hosts regexp=^${item.host} line="${item.line}" create=yes state=present
-#   with_items:
-#    - { "host": "github.com", "line": "github.com,207.97.227.239 ssh-rsa 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48" }
 
-- name: Checkout the Git with ref "{{ odoo_version }}"
-  git: repo=https://github.com/odoo/odoo.git dest=/opt/odoo_src/{{ odoo_version }} bare=yes depth=1 force=no version="{{ odoo_version }}" accept_hostkey=true
+
+- name: Clone the Git with ref "{{ OE_VERSION }}"
+  git: repo=https://github.com/odoo/odoo.git dest={{ OE_HOME_EXT }} depth=1 force=no version="{{ OE_VERSION }}" accept_hostkey=true
+  
+- name: Ensure custom module directory exists
+  file: path={{ OE_HOME }}/custom/addons owner={{ OE_USER }} group={{ OE_USER }} state=present
+  
+- name: Ensure server config file is asembled from template, exists and is at the right place
+  template: src=odoo-server.j2 dest=/etc/{{ OE_CONFIG }}.conf owner={{ OE_USER }} group={{ OE_USER }} mode=640 state=present
+    
+- name: Ensure statrup script meets configuration
+  template: src=start.sh.j2 dest={{ OE_HOME_EXT }}/start.sh mode=0755 state=updated
+  
+- name: Ensure initscript script is present and meets configuration
+  template: src=init.d.j2 dest=/etc/init.d/{{ OE_CONFIG }} mode=0755 group=root state=updated
+
+- name: Start ODOO Server and enable on stratup
+  service: name={{ OE_CONFIG }} state=started enabled=yes
+
+- name: Done!
+  debug: "Try {{ ansible_all_ipv4_addresses }}:8069 or the use different port if set in vagrantfile"
+

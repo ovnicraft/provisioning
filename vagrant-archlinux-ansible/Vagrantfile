@@ -36,7 +36,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.provision "shell", inline: "sudo tar -xzf /vagrant/ansible_odoo.tar"
   ############################################################################
   
-  config.vm.synced_folder "./odoo_src", "/opt/odoo_src", create: true
+  ## Additional shared folder to acces source with your favorite tools.
+  config.vm.synced_folder "./odoo_src", "/opt/odoo", create: true
   
   config.vm.provision "shell", inline: "ansible-playbook /vagrant/ansible_odoo/playbook.yml -i '127.0.0.1,' --connection=local"
   
