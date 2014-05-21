@@ -33,10 +33,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #  file.source      = './ansible_odoo.tar'
   #  file.destination = '/vagrant/ansible_odoo.tar'
   #end
-  
   #config.vm.provision "shell", inline: "sudo tar -xzf /vagrant/ansible_odoo.tar"
   ############################################################################
   
-  config.vm.synced_folder "./ansible_openerp", "/vagrant/ansible_openerp", create: true
-
+  config.vm.synced_folder "./odoo_src", "/opt/odoo_src", create: true
+  
+  config.vm.provision "shell", inline: "ansible-playbook /vagrant/ansible_odoo/playbook.yml -i '127.0.0.1,' --connection=local"
+  
 end
