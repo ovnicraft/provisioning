@@ -14,15 +14,17 @@
 - name: initialize the postgresql database cluster
   command: /usr/bin/su - postgres -c "/usr/bin/initdb --locale en_US.UTF-8 --pgdata '/var/lib/postgres/data'"
     creates=/var/lib/postgres/data/PG_VERSION
-
+  
+- name: start the postgresql daemon and enable on boot
+  service: name=postgresql state=started enabled=true
+  tags: postgresql-start
+ 
 ## - name: PostgreSQL $PG_VERSION Settings
 ##  lineinfile: dest=/var/lib/postgres/data/main/postgresql.conf regexp=^#listen_addresses line="listen_addresses = '*'"
 
 - name: Ensure ODOO database user is created properly
-  postgresql_user: name={{ OE_USER }} role_attr_flags=SUPERUSER state=present
+  postgresql_user: name="{{ OE_USER }}" role_attr_flags=SUPERUSER state=present
 
-- name: start the postgresql daemon and enable on boot
-  service: name=postgresql state=started enabled=true
   
 ###########################
 ##   REVISION WELCOME    ##
