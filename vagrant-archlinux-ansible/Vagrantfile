@@ -44,43 +44,27 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   
-  
-  
   # Every Vagrant virtual environment requires a box to build off of.
-  
   config.vm.box = "3100/arch"
   
   
-  
-  
   # Needed to acces openerp on its default port 8069 on the host machine. (localhost:8069)
-
   config.vm.network :forwarded_port, guest: 8069, host: 8069
   
   # Only needed if you want to browse DB from pgadmin or some other pg tool
-  
   config.vm.network :forwarded_port, host: 4321, guest: 5432
   
   
-  
-  
   # Invoke the scripts to prepare for ansible power
-  
   config.vm.provision :shell, inline: $getpython
   config.vm.provision :shell, inline: $getansible
   
   
-  
-  
   # Additional shared folder to acces odoo sourcecode with your favorite tools from the host.
-  
   config.vm.synced_folder "./odoo_src", "/opt/odoo", create: true
   
   
-  
-  
   # The command is run in local-mode on the guest with inventory "127.0.0.1," - comma important to trick the interpreter.
-  
   config.vm.provision :shell, inline: "ansible-playbook /vagrant/ansible_odoo/playbook.yml -i '127.0.0.1,' --connection=local"
 
 
