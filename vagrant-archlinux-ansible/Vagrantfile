@@ -3,43 +3,38 @@
 
 ## Simple scripts to prepare the machine for ansible prior to playing the playbook
 $getpython = <<SCRIPT
-pacman -Sy --noconfirm python2
+  pacman -Sy --noconfirm python2
 SCRIPT
 
 $getansible = <<SCRIPT
-sudo curl -O https://aur.archlinux.org/packages/an/ansible-git/ansible-git.tar.gz
-sudo tar -xzf ansible-git.tar.gz
-cd ansible-git
-sudo makepkg -i -c -s --asroot --noconfirm --noprogressbar
+  sudo curl -O https://aur.archlinux.org/packages/an/ansible-git/ansible-git.tar.gz
+  sudo tar -xzf ansible-git.tar.gz
+  cd ansible-git
+  sudo makepkg -i -c -s --asroot --noconfirm --noprogressbar
 SCRIPT
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "3100/arch"
-  config.vm.network :private_network, ip: "192.168.111.222"
-  config.vm.network "forwarded_port", guest: 8069, host: 8079
   
-  ## Invoke the getython-script
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "3100/arch"
+  
+  # Needed to acces openerp on its default port 8069 on the host machine. (localhost:8069)
+  config.vm.network "forwarded_port", guest: 8069, host: 8069
+  
+  # Only needed if you want to browse DB from pgadmin or some other pg tool
+  config.vm.network :forwarded_port, host: 4321, guest: 5432
+  
+  # Invoke the scripts to prepare for ansible power
   config.vm.provision "shell", inline: $getpython
-  ## Invoke the getansible-script
   config.vm.provision "shell", inline: $getansible
   
-  ## Get Ansible Playbooks on the guest.
-  ############################################################################
-  #If the magic doen't work you can try to tar the folder and use this method
-  #---------------------------------------------------------------------------
-  #config.vm.provision :file do |file|
-  #  file.source      = './ansible_odoo.tar'
-  #  file.destination = '/vagrant/ansible_odoo.tar'
-  #end
-  #config.vm.provision "shell", inline: "sudo tar -xzf /vagrant/ansible_odoo.tar"
-  ############################################################################
-  
-  ## Additional shared folder to acces source with your favorite tools.
+  # Additional shared folder to acces odoo sourcecode with your favorite tools from the host.
   config.vm.synced_folder "./odoo_src", "/opt/odoo", create: true
   
+  # The command is run in local-mode on the guest with inventory "127.0.01," - comma important to trick the interpreter.
   config.vm.provision "shell", inline: "ansible-playbook /vagrant/ansible_odoo/playbook.yml -i '127.0.0.1,' --connection=local"
   
 end
