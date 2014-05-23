@@ -14,4 +14,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   config.vm.network "forwarded_port", guest: 8069, host: 8069
   config.vm.provision :shell, :path => "odoo_install.sh"
+  
+  # Unless you change the user in the instal script 
+  # (eg. for installing two DBs in parallel) 
+  # this will sync the install dir to your host for easy inpection and editing
+  config.vm.synced_folder "./odoo_src", "/opt/odoo", create: true
 end
