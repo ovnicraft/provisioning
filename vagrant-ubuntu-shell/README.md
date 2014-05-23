@@ -1,4 +1,7 @@
-#### Installation
+##### Purpose:
+
+* Help you set up a vitual machine with your preferred ODOO version running in no time and no hassle.
+* Use Githubs CDN for faster downloading of ODOO (case: LATAM)
 
 ##### Prerequisits:
 
