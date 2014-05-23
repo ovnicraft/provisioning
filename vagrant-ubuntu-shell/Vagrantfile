@@ -18,5 +18,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Unless you change the user in the instal script 
   # (eg. for installing two DBs in parallel) 
   # this will sync the install dir to your host for easy inpection and editing
-  config.vm.synced_folder "./odoo_src", "/opt/odoo", create: true
+  config.vm.synced_folder "./odoo_src", "/opt/odoo_sync", create: true
 end
