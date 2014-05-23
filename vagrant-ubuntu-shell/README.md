@@ -1,8 +1,5 @@
 ```
-Caution: Every time you vagrant up/reaload shared folder (where the git is cloned to) will be erased.
-Caution: That means, your ODOO installation will be gone.
-Caution: You might copy the content out of the shared folder on your host to keep it and put it back afterwards.
-Caution: You're also advised not to use vagrant halt/up, but vagrant suspend/reload
+Caution: Every time you vagrant up/reaload, shared folder will be erased.
 ```
 
 ##### Purpose:
