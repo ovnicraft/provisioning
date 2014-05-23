@@ -24,6 +24,6 @@
 
 ##### Access:
 
-**Browser-Access:** `http://localhost:8069` # port can be changed in the vagrant file
+- *Browser-Access:* `http://localhost:8069` - port can be changed in the vagrant file
 
-**DB-Management-Password:** `superadminpassword` # can be changed in the shell script
+- *DB-Management-Password:* `superadminpassword` - can be changed in the shell script
