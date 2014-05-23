@@ -24,6 +24,7 @@ OE_HOME_EXT="/opt/$OE_USER/$OE_USER-server"
 
 #Enter version for checkout "7.0" for version 7.0, "saas-4 and "master" for trunk
 OE_VERSION="saas-4"
+OE_DEPTH="1"
 
 #set the superadmin password
 OE_SUPERADMIN="superadminpassword"
@@ -71,7 +72,7 @@ sudo chown $OE_USER:$OE_USER /var/log/$OE_USER
 # Install ODOO
 #--------------------------------------------------
 echo -e "\n==== Installing ODOO Server ===="
-sudo git clone --branch $OE_VERSION https://www.github.com/odoo/odoo $OE_HOME_EXT/
+sudo git clone --depth $OE_DEPTH --branch $OE_VERSION https://www.github.com/odoo/odoo $OE_HOME_EXT/
 
 echo -e "\n---- Create custom module directory ----"
 sudo su $OE_USER -c "mkdir $OE_HOME/custom"
