@@ -1,5 +1,5 @@
 ```
-Caution: Every time you vagrant up/reaload, shared folder will be erased.
+Caution: Every time you vagrant up/reaload, shared folder './odoo_src' <-> './odoo_sync' will be erased.
 ```
 
 ##### Purpose:
