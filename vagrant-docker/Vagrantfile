@@ -9,7 +9,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ## The ugly an heavy way. The 'lightweight' & 'beautiful' way from below doesn't work.
   a.vm.box = "phusion/ubuntu-14.04-amd64"
     a.vm.provision "docker" do |d|
-        d.run "flox/ubuntu-openerp",
+        # d.run "tinyerp/ubuntu-openerp:7.0",
+        d.run "tinyerp/ubuntu-openerp:8.0",
         args: "-d --name='openerp' --publish='8069:8069'"
     end
   
