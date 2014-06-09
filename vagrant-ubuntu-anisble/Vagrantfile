@@ -56,8 +56,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "phusion/ubuntu-14.04-amd64"
-  
+  config.vm.box = "trusty-server-cloudimg-i386-vagrant-disk"
+  config.vm.box_url = 'https://cloud-images.ubuntu.com/vagrant/trusty/20140602/trusty-server-cloudimg-i386-vagrant-disk1.box'
   
   # Needed to acces openerp on its default port 8069 on the host machine. (localhost:8069)
   config.vm.network :forwarded_port, guest: 8069, host: 8049
